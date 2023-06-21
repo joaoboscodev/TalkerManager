@@ -1,7 +1,6 @@
 const fs = require('fs').promises;
 const path = require('path');
 
-
 const talkerPath = path.resolve(__dirname, '../talker.json');
 const readTalkersData = async () => {
   try {
@@ -10,6 +9,6 @@ const readTalkersData = async () => {
   } catch (err) {
     console.error(`Erro ao ler o arquivo: ${err.message}`);
   }
-}
+};
 
 module.exports = readTalkersData;
