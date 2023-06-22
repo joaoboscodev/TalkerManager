@@ -11,4 +11,4 @@ const readTalkersData = async () => {
   }
 };
 
-module.exports = readTalkersData; //teste
+module.exports = readTalkersData;
