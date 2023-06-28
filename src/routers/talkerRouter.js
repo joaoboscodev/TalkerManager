@@ -37,4 +37,21 @@ talkerRouter.post('/', async (req, res) => {
   return res.status(201).json(newTalker);
 });
 
+talkerRouter.put('/:id', async (req, res) => {
+  const { id } = req.params;
+  const { body } = req;
+  const talkersData = await readFile();
+  const talkerIndex = talkersData.findIndex((talker) => talker.id === Number(id));
+
+  if (talkerIndex === -1) {
+    return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
+  }
+
+  const updatedTalker = { id: talkersData[talkerIndex].id, ...body };
+  talkersData[talkerIndex] = updatedTalker;
+
+  await writeFile.createTalker(talkersData);
+  return res.status(200).json(updatedTalker);
+});
+
 module.exports = talkerRouter;
