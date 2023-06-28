@@ -1,14 +1,3 @@
-const tokenValidate = async (req, res, next) => {
-  const token = req.header('authorization');
-  if (!token) {
-    return res.status(401).json({ message: 'Token não encontrado' });
-  }
-  if (token && token.length !== 16) {
-    return res.status(401).json({ message: 'Token inválido' });
-  }
-  next();
-};
-
 const validateAge = (req, res, next) => {
   const { age } = req.body;
   if (!age) {
@@ -62,4 +51,4 @@ const validateTalker = (req, res, next) => {
   next();
 };
 
-module.exports = { tokenValidate, validateName, validateAge, validateTalker };
+module.exports = { validateName, validateAge, validateTalker };
