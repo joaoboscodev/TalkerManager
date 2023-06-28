@@ -23,6 +23,19 @@ talkerRouter.get('/:id', async (req, res) => {
 });
 
 talkerRouter.use(tokenValidate);
+
+talkerRouter.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+  const talkersData = await readFile();
+  const talkerIndex = talkersData.findIndex((talker) => talker.id === Number(id));
+
+  if (talkerIndex === -1) {
+    return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
+  }
+  await writeFile.deleteTalker(id);
+  return res.sendStatus(204);
+});
+
 talkerRouter.use(validateAge);
 talkerRouter.use(validateName);
 talkerRouter.use(validateTalker);
