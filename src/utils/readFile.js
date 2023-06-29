@@ -2,7 +2,7 @@ const fs = require('fs').promises;
 const path = require('path');
 
 const talkerPath = path.resolve(__dirname, '../talker.json');
-const readTalkersData = async (q, rate) => {
+const readTalkersData = async (q, rate, date) => {
   try {
     const data = JSON.parse(await fs.readFile(talkerPath));
     let dataFiltered = data;
@@ -11,6 +11,9 @@ const readTalkersData = async (q, rate) => {
     } 
     if (rate) {
       dataFiltered = dataFiltered.filter(({ talk }) => talk.rate === Number(rate));
+    } 
+    if (date) {
+      dataFiltered = dataFiltered.filter(({ talk }) => talk.watchedAt === date);
     }
     return dataFiltered;
   } catch (err) {

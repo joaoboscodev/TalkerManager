@@ -5,14 +5,16 @@ const {
 validateAge, 
 validateName,
 validateTalker, 
-validateRateParam } = require('../middlewares/dataValidate');
+validateRateParam, 
+validateDateParam } = require('../middlewares/dataValidate');
 const tokenValidate = require('../middlewares/tokenValidate');
 
 const talkerRouter = express.Router();
 
-talkerRouter.get('/search', tokenValidate, validateRateParam, async (req, res) => {
-  const { q, rate } = req.query;
-  const response = await readFile(q, rate);
+talkerRouter.get('/search', tokenValidate, validateRateParam,
+validateDateParam, async (req, res) => {
+  const { q, rate, date } = req.query;
+  const response = await readFile(q, rate, date);
   return res.status(200).json(response);
 });
 
