@@ -34,6 +34,16 @@ const validateRate = (rate) => {
   }
 };
 
+const validateRateParam = (req, res, next) => {
+  const { rate } = req.query;
+  if (rate && (rate < 1 || rate > 5 || rate % 1 !== 0)) {
+    return res.status(400).json({
+      message: 'O campo "rate" deve ser um número inteiro entre 1 e 5',
+    });
+  }
+  next();
+};
+
 const validateTalker = (req, res, next) => {
   const { talk } = req.body;
   if (!talk) {
@@ -51,4 +61,4 @@ const validateTalker = (req, res, next) => {
   next();
 };
 
-module.exports = { validateName, validateAge, validateTalker };
+module.exports = { validateName, validateAge, validateTalker, validateRateParam };

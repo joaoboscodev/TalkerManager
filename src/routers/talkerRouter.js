@@ -1,15 +1,18 @@
 const express = require('express');
 const readFile = require('../utils/readFile');
 const writeFile = require('../utils/writeFile');
-const { validateAge, validateName,
-validateTalker } = require('../middlewares/dataValidate');
+const { 
+validateAge, 
+validateName,
+validateTalker, 
+validateRateParam } = require('../middlewares/dataValidate');
 const tokenValidate = require('../middlewares/tokenValidate');
 
 const talkerRouter = express.Router();
 
-talkerRouter.get('/search', tokenValidate, async (req, res) => {
-  const { q } = req.query;
-  const response = await readFile(q);
+talkerRouter.get('/search', tokenValidate, validateRateParam, async (req, res) => {
+  const { q, rate } = req.query;
+  const response = await readFile(q, rate);
   return res.status(200).json(response);
 });
 
