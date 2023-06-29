@@ -7,6 +7,12 @@ const tokenValidate = require('../middlewares/tokenValidate');
 
 const talkerRouter = express.Router();
 
+talkerRouter.get('/search', tokenValidate, async (req, res) => {
+  const { q } = req.query;
+  const response = await readFile(q);
+  return res.status(200).json(response);
+});
+
 talkerRouter.get('/', async (req, res) => {
   const response = await readFile();
   return res.status(200).json(response);
