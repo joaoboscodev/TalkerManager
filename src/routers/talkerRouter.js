@@ -6,7 +6,8 @@ validateAge,
 validateName,
 validateTalker, 
 validateRateParam, 
-validateDateParam } = require('../middlewares/dataValidate');
+validateDateParam, 
+validateRateToPatch } = require('../middlewares/dataValidate');
 const tokenValidate = require('../middlewares/tokenValidate');
 
 const talkerRouter = express.Router();
@@ -44,6 +45,14 @@ talkerRouter.delete('/:id', async (req, res) => {
     return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
   }
   await writeFile.deleteTalker(id);
+  return res.sendStatus(204);
+});
+
+talkerRouter.patch('/rate/:id', tokenValidate, 
+validateRateToPatch, async (req, res) => {
+  const { id } = req.params;
+  const { rate } = req.body;
+  await writeFile.updateRate(id, rate);
   return res.sendStatus(204);
 });
 

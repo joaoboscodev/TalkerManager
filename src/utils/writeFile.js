@@ -18,4 +18,15 @@ const deleteTalker = async (id) => {
   await createTalker(newData);
 };
 
-module.exports = { createTalker, deleteTalker };
+const updateRate = async (id, updatedRate) => {
+  const talkerData = await readFile();
+  const updatedData = talkerData.map((talker) => {
+    if (talker.id === +id) {
+      return { ...talker, talk: { ...talker.talk, rate: +updatedRate } };
+    }
+    return talker;
+  });
+  await createTalker(updatedData);
+};
+
+module.exports = { createTalker, deleteTalker, updateRate };
